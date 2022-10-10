@@ -17,6 +17,8 @@ def test_parallel():
 
     assert round(dist,2) == 1
 
+    #Zane to do: add more tests
+
 
 def test_skew():
 
