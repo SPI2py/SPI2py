@@ -9,9 +9,14 @@ from utils.distance_calculations import min_points_linesegment_distance
 
 def test_first():
     #test simple orthogonal endpoint case
-    p = np.array([1., 0., 1.])
-    a = np.array([0., 0., 0.])
-    b = np.array([1., 0., 0.])
+
+    p = np.array([2., 1., 2.])
+    a = np.array([1., 1., 1.])
+    b = np.array([2., 1., 1.])
+
+    # p = np.array([1., 0., 1.])
+    # a = np.array([0., 0., 0.])
+    # b = np.array([1., 0., 0.])
 
     min_dist = min_points_linesegment_distance(p, a, b)
 
