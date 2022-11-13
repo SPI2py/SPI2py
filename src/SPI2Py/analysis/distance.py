@@ -126,10 +126,9 @@ def min_linesegment_linesegment_distance(a0, a1, b0, b1):
     TODO Document function logic more clearly
     TODO Vectorize?
     """
-
     # Calculate denominator
-    A = a1 - a0
-    B = b1 - b0
+    A = np.subtract(a1, a0)
+    B = np.subtract(b1, b0)
     magA = np.linalg.norm(A)
     magB = np.linalg.norm(B)
 
@@ -175,9 +174,12 @@ def min_linesegment_linesegment_distance(a0, a1, b0, b1):
 
     # Lines criss-cross: Calculate the projected closest points
 
-    t = (b0 - a0)
-    detA = np.linalg.det([t, _B, cross])
-    detB = np.linalg.det([t, _A, cross])
+    t = np.subtract(b0, a0)
+    detA = np.linalg.det(np.array([t, _B, cross]))
+    detB = np.linalg.det(np.array([t, _A, cross]))
+    # temp = np.array([[1, 2, 3], [3, 2, 6], [9, 4, 2]])
+    # detA = np.linalg.det(temp)
+    # detB = np.linalg.det(np.array([[8, 2, 3], [3, 2, 7], [9, 6, 2]]))
 
     t0 = detA / denom
     t1 = detB / denom
