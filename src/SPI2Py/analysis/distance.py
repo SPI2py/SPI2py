@@ -93,6 +93,8 @@ def min_spheres_linesegment_distance(points, a, b):
     TODO Modify function calls to provide a list of point(s) instead of a single point
     TODO Fix documentation
     TODO Vectorize?
+    TODO Vectorize for loop with numba.vectorize or numba.guvectorize
+    TODO fix loop for single point vs. multiple points
 
     :param points: list of
     :param a: (3,)
@@ -100,16 +102,36 @@ def min_spheres_linesegment_distance(points, a, b):
     :return:
     """
 
-    min_distances = []
-    for point in points:
-        min_point_distance = np.linalg.norm(np.dot(point - b, a - b) / np.dot(a - b, a - b) * (a - b) + b - point)
-        min_distances.append(min_point_distance)
+    p = points
+    # normalized tangent vector
+    d = np.divide(b - a, np.linalg.norm(b - a))
 
-    min_distance = np.min(min_distances)
+    # signed parallel distance components
+    s = np.dot(a - p, d)
+    t = np.dot(p - b, d)
 
-    return min_distance
+    # clamped parallel distance
+    h = np.maximum.reduce([s, t, 0])
+
+    # perpendicular distance component
+    c = np.cross(p - a, d)
+
+    return np.hypot(h, np.linalg.norm(c))
+
+    # min_distances = []
+    # for point in points:
+    #     min_point_distance = np.linalg.norm(np.dot(point - b, a - b) / np.dot(a - b, a - b) * (a - b) + b - point)
+    #     min_distances.append(min_point_distance)
+
+    # min_distance = np.min(min_distances)
+    # print(min_distances)
+
+    #return np.linalg.norm(np.dot(p - b, a - b) / np.dot(a - b, a - b) * (a - b) + b - p)
+
+    #return min_distance
 
 
+#@njit(cache=True)
 @njit(cache=True)
 def min_linesegment_linesegment_distance(a0, a1, b0, b1):
     """
