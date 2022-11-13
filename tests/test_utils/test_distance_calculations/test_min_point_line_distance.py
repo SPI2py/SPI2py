@@ -80,6 +80,7 @@ def test_first():
     assert round(min_dist, 2) == round(3 * math.sqrt(3), 2)
 
 
+
 test_first()
 
 
