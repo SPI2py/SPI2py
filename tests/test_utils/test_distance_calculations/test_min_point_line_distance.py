@@ -1,5 +1,6 @@
 import numpy as np
 import sys
+import math
 sys.path
 sys.path.append('/Users/zgivans33/Documents/2021-22 Summer Research/SPI2GithubWork/SPI2Py/src/SPI2Py')
 from utils.distance_calculations import min_points_linesegment_distance
@@ -17,6 +18,64 @@ def test_first():
     print("min_dist: ", min_dist)
 
     assert round(min_dist, 2) == 1
+
+    #test point equals endpoint case
+    p = np.array([4., 5., 6.])
+    a = np.array([0., 0., 0.])
+    b = np.array([4., 5., 6.])
+
+    min_dist = min_points_linesegment_distance(p, a, b)
+
+    print("min_dist: ", min_dist)
+
+    assert round(min_dist, 2) == 0
+
+    #test point equals midpoint case
+    p = np.array([2., 2., 5.])
+    a = np.array([2., 2., 2.])
+    b = np.array([2., 2., 8.])
+
+    min_dist = min_points_linesegment_distance(p, a, b)
+
+    print("min_dist: ", min_dist)
+
+    assert round(min_dist, 2) == 0
+
+    #test midpoint orthogonal case
+    p = np.array([2., 0., 2.])
+    a = np.array([0., 0., 0.])
+    b = np.array([4., 0., 0.])
+
+    min_dist = min_points_linesegment_distance(p, a, b)
+
+    print("min_dist: ", min_dist)
+
+    assert round(min_dist, 2) == 2
+
+    #test within same line but not on line segment
+    p = np.array([8., 0., 0.])
+    a = np.array([0., 0., 0.])
+    b = np.array([5., 0., 0.])
+
+    min_dist = min_points_linesegment_distance(p, a, b)
+
+    print("min_dist: ", min_dist)
+
+    assert round(min_dist, 2) == 3
+
+    #test far away, endpoint closest
+    p = np.array([3., 3., 3.])
+    a = np.array([0., 0., 0.])
+    b = np.array([-1., 0., 0.])
+
+    min_dist = min_points_linesegment_distance(p, a, b)
+
+    print("min_dist: ", min_dist)
+
+    assert round(min_dist, 2) == round(3 * math.sqrt(3), 2)
+
+
+test_first()
 
 
 
