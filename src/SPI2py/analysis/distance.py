@@ -12,7 +12,7 @@ from numba import njit
 from scipy.spatial.distance import cdist
 
 
-def min_spheres_spheres_interference(positions_a, radii_a, positions_b, radii_b):
+def max_spheres_spheres_interference(positions_a, radii_a, positions_b, radii_b):
     """
     Computes the minimum distance between two sets of spheres.
 
@@ -32,6 +32,12 @@ def min_spheres_spheres_interference(positions_a, radii_a, positions_b, radii_b)
     """
 
     pairwise_distances = cdist(positions_a, positions_b)
+
+    # TODO Reshape radii to 2D
+    radii_a = radii_a.reshape(-1, 1)
+    radii_b = radii_b.reshape(-1, 1)
+
+    # TODO Shouldn't I be adding these... (?)
     pairwise_radii = cdist(radii_a, radii_b)
 
     pairwise_interferences = pairwise_radii - pairwise_distances
@@ -71,7 +77,6 @@ def min_kdtree_distance(tree, positions):
     """
 
     # tree.query returns distances and IDs. We only care about the distances
-    # TODO explain this comment better
     dist, _ = tree.query(positions)
     min_dist = np.min(dist)
 
@@ -146,7 +151,7 @@ def min_linesegment_linesegment_distance(a0, a1, b0, b1):
 
     TODO Write unit tests
     TODO Document function logic more clearly
-    TODO Vectorize?
+    TODO Vectorize
     """
     # Calculate denominator
     A = np.subtract(a1, a0)
