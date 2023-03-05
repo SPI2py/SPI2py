@@ -12,3 +12,9 @@ venv/*
 SPI2Py.egg-info/
 .gif
 .vscodecounter/
+/examples/CubeSat/geometric_optimization.gif
+/examples/demo_1/geometric_optimization.gif
+/examples/CubeSat/logger.log
+/examples/demo_1/logger.log
+/examples/CubeSat/report.json
+/examples/demo_1/report.json
